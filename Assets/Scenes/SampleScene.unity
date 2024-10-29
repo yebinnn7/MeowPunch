@@ -2771,7 +2771,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 400002, guid: 76c2b062b8f58f049aff4c677644000e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 759062707}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100002, guid: 76c2b062b8f58f049aff4c677644000e, type: 3}
       insertIndex: -1
@@ -3477,6 +3480,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 720845307}
   m_Mesh: {fileID: 6708726032604497775, guid: 02ad78cca7f19f843b49a2e580791919, type: 3}
+--- !u!1 &759062706
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 759062707}
+  m_Layer: 0
+  m_Name: CameraFollow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &759062707
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 759062706}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.781, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 516726514}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &811169071
 GameObject:
   m_ObjectHideFlags: 0
@@ -4720,14 +4754,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab464fd73d5298a468e8fb621edb9960, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 516726514}
-  offset: {x: 0, y: 3, z: 0}
+  target: {fileID: 759062707}
+  offset: {x: 0, y: 1.5, z: 0}
   mouseSensitivity: 300
   minYAngle: -10
   maxYAngle: 10
   minXAngle: -360
   maxXAngle: 360
-  rotationOffset: {x: 30, y: 0, z: 0}
+  rotationOffset: {x: 60, y: 0, z: 0}
 --- !u!1 &978152358
 GameObject:
   m_ObjectHideFlags: 0
