@@ -10,7 +10,7 @@ public class HamsterController : MonoBehaviour
     public float changeDirectionInterval = 2f;  // 방향 변경 주기
     public float fixedYPosition = -1.16f;         // 고정 y 좌표 값
     public float maxLifeTime = 10f;
-    public float currentLifeTime = 0;
+    public float currentLifeTime;
 
     private Vector3 moveVec;                    // 이동 벡터
     private Animator anim;                      // 애니메이터
@@ -19,11 +19,19 @@ public class HamsterController : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        currentLifeTime = 0f; // 타이머 초기화
         StartCoroutine(ChangeDirectionRoutine()); // 방향 변경 코루틴 시작
     }
 
     void Update()
     {
+        if (currentLifeTime > maxLifeTime)
+        {
+            Destroy(gameObject);
+
+            return;
+        }
+
         // 이동 처리
         transform.position += moveVec * speed * Time.deltaTime;
 
@@ -42,10 +50,9 @@ public class HamsterController : MonoBehaviour
         }
 
         currentLifeTime += Time.deltaTime;
-        if (currentLifeTime > maxLifeTime)
-        {
-            Destroy(this.gameObject);
-        }
+        
+
+        
     }
 
     IEnumerator ChangeDirectionRoutine()
