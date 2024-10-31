@@ -20,6 +20,7 @@ public class HamsterGenerator : MonoBehaviour
 
     IEnumerator SpawnHamsterCoroutine()
     {
+
         yield return new WaitForSeconds(5f); // 처음 생성 대기 시간
 
         while (true) // 계속해서 햄스터 생성
@@ -28,7 +29,9 @@ public class HamsterGenerator : MonoBehaviour
             GameObject obj = Instantiate(hamsterPrefab, spawnPosition, Quaternion.identity);
             // Debug.Log("햄스터 생성: " + obj.name + " 위치: " + spawnPosition);
 
-            yield return new WaitForSeconds(5f); // 다음 햄스터 생성 대기 시간
+            float spawnTime = Random.Range(10f, 20f); // 랜덤으로 생성 대기 시간 설정
+
+            yield return new WaitForSeconds(spawnTime); // 다음 햄스터 생성 대기 시간
         }
     }
 
