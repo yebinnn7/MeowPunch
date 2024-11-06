@@ -51,5 +51,11 @@ public class CatController : MonoBehaviour
         {
             anim.SetBool("isWalk", false);
         }
+
+        // 공격 모션
+        if (Input.GetMouseButtonDown(0))
+        {
+            anim.SetTrigger("isAttack");
+        }
     }
 }
