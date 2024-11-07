@@ -78,4 +78,19 @@ public class HamsterController : MonoBehaviour
         // 다른 오브젝트와 충돌하면 새로운 방향으로 전환
         SetRandomDirection();
     }
+
+    public void HamsterDead()
+    {
+        anim.SetTrigger("Death");
+        StartCoroutine(HamsterDestroy(0.5f));
+    }
+
+    IEnumerator HamsterDestroy(float delay)
+    {
+        // Wait for the specified delay (1 second in this case)
+        yield return new WaitForSeconds(delay);
+
+        // Destroy the GameObject after the delay
+        Destroy(gameObject);
+    }
 }

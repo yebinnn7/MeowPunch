@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 5214596212339948381}
   - component: {fileID: 6615893116148231751}
   - component: {fileID: 3760694181044071142}
+  - component: {fileID: 6243983805624959141}
   m_Layer: 0
   m_Name: Hamster_LOD0
   m_TagString: hamster
@@ -132,6 +133,27 @@ MonoBehaviour:
   fixedYPosition: -1.16
   maxLifeTime: 10
   currentLifeTime: 0
+--- !u!95 &6243983805624959141
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3356354769386061858}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 92b6976b500632b45a80c0073e7ddb76, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3356354769386061860
 GameObject:
   m_ObjectHideFlags: 0

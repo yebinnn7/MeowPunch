@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mouse : MonoBehaviour
+public class MouseController : MonoBehaviour
 {
     public float speed = 1f;                    // 이동 속도
     public float changeDirectionInterval = 2f;  // 방향 변경 주기
@@ -60,5 +60,20 @@ public class Mouse : MonoBehaviour
     {
         // 다른 오브젝트와 충돌하면 새로운 방향으로 전환
         SetRandomDirection();
+    }
+
+    public void MouseDead()
+    {
+        anim.SetTrigger("Death");
+        StartCoroutine(MouseDestroy(0.5f));
+    }
+
+    IEnumerator MouseDestroy(float delay)
+    {
+        // Wait for the specified delay (1 second in this case)
+        yield return new WaitForSeconds(delay);
+
+        // Destroy the GameObject after the delay
+        Destroy(gameObject);
     }
 }
