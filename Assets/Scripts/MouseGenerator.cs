@@ -7,7 +7,6 @@ public class MouseGenerator : MonoBehaviour
     public GameObject mousePrefab;
     private List<Vector3> pos = new List<Vector3>();
 
-
     private float timer = 0f;  // 타이머 값
     private float spawnInterval = 3f;  // 기본 생성 간격
 
