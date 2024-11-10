@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class MouseController : MonoBehaviour
 {
+    public GameObject gameManagerObj; // GameManager 오브젝트 참조
+    public GameManager gameManager; // GameManager 스크립트 참조
+
     public float speed = 1f;                    // 이동 속도
     public float changeDirectionInterval = 2f;  // 방향 변경 주기
     public float fixedYPosition = -1.16f;         // 고정 y 좌표 값
@@ -12,10 +15,13 @@ public class MouseController : MonoBehaviour
     private Vector3 moveVec;                    // 이동 벡터
     private Animator anim;                      // 애니메이터
 
-    void Start()
+    void Awake()
     {
+
         anim = GetComponent<Animator>();
+
         StartCoroutine(ChangeDirectionRoutine()); // 방향 변경 코루틴 시작
+
     }
 
     void Update()
@@ -66,6 +72,7 @@ public class MouseController : MonoBehaviour
     {
         anim.SetTrigger("Death");
         StartCoroutine(MouseDestroy(0.5f));
+        GameManager.Instance.AddMouseCount();
     }
 
     IEnumerator MouseDestroy(float delay)

@@ -19,7 +19,7 @@ public class Attack : MonoBehaviour
             if (!collidersInRange.Contains(other)) // 이미 리스트에 있지 않으면 추가
             {
                 collidersInRange.Add(other);
-                Debug.Log("트리거에 들어감: " + other.gameObject.name); // 디버그 로그
+                // Debug.Log("트리거에 들어감: " + other.gameObject.name); // 디버그 로그
             }
         }
     }
@@ -30,7 +30,7 @@ public class Attack : MonoBehaviour
         if (other.CompareTag("hamster") || other.CompareTag("mouse"))
         {
             collidersInRange.Remove(other); // 트리거에서 나가면 리스트에서 제거
-            Debug.Log("트리거에서 나감: " + other.gameObject.name); // 디버그 로그
+            // Debug.Log("트리거에서 나감: " + other.gameObject.name); // 디버그 로그
         }
     }
 
@@ -55,7 +55,7 @@ public class Attack : MonoBehaviour
             // 트리거 안에 있는 모든 객체 삭제
             foreach (Collider collider in collidersInRange)
             {
-                Debug.Log("삭제 대상: " + collider.gameObject.name); // 디버그 로그
+                // Debug.Log("삭제 대상: " + collider.gameObject.name); // 디버그 로그
 
                 if (collider.tag == "mouse")
                 {

@@ -16,9 +16,11 @@ public class CatController : MonoBehaviour
     Vector3 moveVec;
     Animator anim;
 
+
     void Start()
     {
         anim = GetComponent<Animator>();
+
     }
 
     void Update()
