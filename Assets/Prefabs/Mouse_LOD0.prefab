@@ -92,15 +92,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5609729870608202244}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0062145586, y: 0.99972147, z: -0.00055962347, w: -0.022763284}
-  m_LocalPosition: {x: -0.07, y: -1.16, z: 0.5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.92, y: -1.16, z: 6.76}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5609729870607705658}
   - {fileID: 5609729870607705638}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0.048, y: 182.609, z: 0.713}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-3734731205243506390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,9 +142,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!135 &5892525510205691559
 SphereCollider:
   m_ObjectHideFlags: 0

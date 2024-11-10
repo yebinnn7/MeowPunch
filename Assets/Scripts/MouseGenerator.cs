@@ -5,8 +5,8 @@ using UnityEngine;
 public class MouseGenerator : MonoBehaviour
 {
     public GameObject mousePrefab;
-    private Vector3 pos1 = new Vector3(10f, -1.16f, -10f);
-    private Vector3 pos2 = new Vector3(-6f, -1.16f, 8f);
+    private List<Vector3> pos = new List<Vector3>();
+
 
     private float timer = 0f;  // 타이머 값
     private float spawnInterval = 3f;  // 기본 생성 간격
@@ -14,6 +14,12 @@ public class MouseGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pos.Add(new Vector3(10f, -1.16f, -10f));
+        pos.Add(new Vector3(-6f, -1.16f, 8f));
+        pos.Add(new Vector3(7.9f, -1.16f, 6.7f));
+        pos.Add(new Vector3(-5f, -1.16f, -3.3f));
+        pos.Add(new Vector3(-4f, -1.16f, -9f));
+
         StartCoroutine(SpawnMouseCoroutine());  // 마우스 생성 코루틴 시작
     }
 
@@ -67,7 +73,7 @@ public class MouseGenerator : MonoBehaviour
     // 마우스 생성 함수
     void SpawnMouse()
     {
-        Vector3 spawnPosition = Random.Range(0, 2) == 0 ? pos1 : pos2;
+        Vector3 spawnPosition = pos[Random.Range(0, 5)];
         Instantiate(mousePrefab, spawnPosition, Quaternion.identity);
     }
 }
