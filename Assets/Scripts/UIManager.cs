@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 
     public Text mouseCatchCountText;
     public Text timerText;
+    public Text levelText;
 
     public float timer;
 
@@ -35,5 +36,10 @@ public class UIManager : MonoBehaviour
     public void UpdateMouseCatchCountText()
     {
         mouseCatchCountText.text = "¿‚¿∫ ¡„: " + GameManager.Instance.mouseCatchCount;
+    }
+
+    public void UpdateLevelText()
+    {
+        levelText.text = "∑π∫ß: " + GameManager.Instance.level;
     }
 }

@@ -8,7 +8,8 @@ public class Attack : MonoBehaviour
 
     void Awake()
     {
-
+        // GameManager의 OnLevelUp 이벤트 구독
+        GameManager.Instance.OnLevelUp += RangeIncrease;
     }
 
     // 트리거에 들어간 객체를 리스트에 추가
@@ -81,5 +82,16 @@ public class Attack : MonoBehaviour
         }
     }
 
+    void RangeIncrease()
+    {
+        // 현재 오브젝트의 스케일 값을 가져옴
+        Vector3 currentScale = transform.localScale;
 
+        // X와 Z 축의 스케일 값을 증가
+        currentScale.x += 0.25f; 
+        currentScale.z += 0.25f;
+
+        // 스케일 값을 적용
+        transform.localScale = currentScale;
+    }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,12 @@ public class GameManager : MonoBehaviour
 
     public int mouseCatchCount;
     public float timer;
+    public int level;
+
+    private int nextLevelCondition;
+
+    // 레벨업 이벤트
+    public event Action OnLevelUp;
 
     // Start is called before the first frame update
     void Awake()
@@ -25,12 +32,19 @@ public class GameManager : MonoBehaviour
 
         mouseCatchCount = 0;
         timer = 0f;
+        level = 1;
+        nextLevelCondition = 20;
     }
 
     // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
+
+        if (mouseCatchCount >= nextLevelCondition)
+        {
+            LevelUp();
+        }
 
     }
 
@@ -45,5 +59,14 @@ public class GameManager : MonoBehaviour
     public float GetTimer()
     {
         return timer;
+    }
+
+    public void LevelUp()
+    {
+        level += 1;
+        nextLevelCondition += 20;
+
+        OnLevelUp?.Invoke();
+        UIManager.Instance.UpdateLevelText();
     }
 }
