@@ -9,6 +9,8 @@ public class MouseGenerator : MonoBehaviour
 
     private float timer = 0f;  // 타이머 값
     private float spawnInterval = 3f;  // 기본 생성 간격
+    private float reductionFactor = 0.7f; // 생성 간격 감소 비율
+    private float reductionPeriod = 10f; // 감소 주기
 
     // Start is called before the first frame update
     void Start()
@@ -27,52 +29,35 @@ public class MouseGenerator : MonoBehaviour
     {
         timer += Time.deltaTime;  // 매 프레임마다 타이머 증가
 
-        // 타이머가 특정 값에 도달하면 생성 간격을 업데이트
-        if (timer >= 10f && timer < 20f)
-        {
-            SetSpawnInterval(10f);  // 10초에 맞는 생성 간격 설정
-        }
-        else if (timer >= 20f && timer < 30f)
-        {
-            SetSpawnInterval(20f);  // 20초에 맞는 생성 간격 설정
-        }
-        else if (timer >= 30f)
-        {
-            SetSpawnInterval(30f);  // 30초 이상일 때 생성 간격 설정
-        }
+        // 생성 간격 업데이트
+        SetSpawnInterval(timer);
     }
 
     // 타이머 값에 맞는 생성 간격을 설정하는 함수
     void SetSpawnInterval(float currentTimer)
     {
-        if (currentTimer == 10f)
-        {
-            spawnInterval = 2f;  
-        }
-        else if (currentTimer == 20f)
-        {
-            spawnInterval = 1.5f; 
-        }
-        else if (currentTimer >= 30f)
-        {
-            spawnInterval = 1f; 
-        }
+        // 감소 주기마다 생성 간격 감소 계산
+        int reductionCount = Mathf.FloorToInt(currentTimer / reductionPeriod);
+        spawnInterval = 3f * Mathf.Pow(reductionFactor, reductionCount);
+
+        // 생성 간격의 하한선을 설정 (옵션)
+        spawnInterval = Mathf.Max(spawnInterval, 0.2f); 
     }
 
     // 마우스를 생성하는 코루틴
     IEnumerator SpawnMouseCoroutine()
     {
-        while (true)  // 무한 반복
+        while (true) // 무한 반복
         {
-            SpawnMouse();  // 마우스 생성
-            yield return new WaitForSeconds(spawnInterval);  // spawnInterval만큼 기다림
+            SpawnMouse(); // 마우스 생성
+            yield return new WaitForSeconds(spawnInterval); // spawnInterval만큼 기다림
         }
     }
 
     // 마우스 생성 함수
     void SpawnMouse()
     {
-        Vector3 spawnPosition = pos[Random.Range(0, 5)];
+        Vector3 spawnPosition = pos[Random.Range(0, pos.Count)];
         Instantiate(mousePrefab, spawnPosition, Quaternion.identity);
     }
 }

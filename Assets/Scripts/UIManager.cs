@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public Text mouseCatchCountText;
     public Text timerText;
     public Text levelText;
+    public Text totalMouseCountText;
 
     public float timer;
 
@@ -35,11 +36,20 @@ public class UIManager : MonoBehaviour
 
     public void UpdateMouseCatchCountText()
     {
-        mouseCatchCountText.text = "잡은 쥐: " + GameManager.Instance.mouseCatchCount;
+        // GameManager에서 가져온 mouseCatchCount와 nextLevelCondition을 사용하여 UI를 업데이트
+        int nextLevelCondition = GameManager.Instance.GetNextLevelCondition();
+        mouseCatchCountText.text = GameManager.Instance.mouseCatchCount + " / " + nextLevelCondition;
     }
 
     public void UpdateLevelText()
     {
-        levelText.text = "레벨: " + GameManager.Instance.level;
+        // 레벨과 레벨업 조건을 UI에 표시
+        levelText.text = "Lv " + GameManager.Instance.level;
+        UpdateMouseCatchCountText();  // 레벨업 조건에 맞춰 mouseCatchCountText를 업데이트
+    }
+
+    public void UpdateTotalMouseCount()
+    {
+        totalMouseCountText.text = GameManager.Instance.totalMouseCount.ToString();
     }
 }

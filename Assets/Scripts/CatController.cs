@@ -1,26 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Security.Cryptography;
-using System.Threading;
 using UnityEngine;
 
 public class CatController : MonoBehaviour
 {
     public float speed = 5f; // 이동 속도
     public Transform cameraTransform; // 카메라 Transform
+    public float smoothTime = 0.1f; // Lerp를 위한 부드럽기 조정
 
-    float hAxis;
-    float vAxis;
+    private float hAxis;
+    private float vAxis;
 
-    Vector3 moveVec;
-    Animator anim;
-
+    private Vector3 moveVec;
+    private Vector3 currentVelocity; // Lerp를 위한 속도
+    private Animator anim;
 
     void Start()
     {
         anim = GetComponent<Animator>();
-
+        GameManager.Instance.OnLevelUp += speedUp;
     }
 
     void Update()
@@ -38,7 +36,10 @@ public class CatController : MonoBehaviour
         camRight.y = 0;
 
         // 입력 방향으로 이동 벡터 설정
-        moveVec = (camForward * vAxis + camRight * hAxis).normalized;
+        Vector3 targetMoveVec = (camForward * vAxis + camRight * hAxis).normalized;
+
+        // Lerp로 부드럽게 이동 벡터 계산
+        moveVec = Vector3.SmoothDamp(moveVec, targetMoveVec, ref currentVelocity, smoothTime);
 
         // 이동 처리
         transform.position += moveVec * speed * Time.deltaTime;
@@ -46,7 +47,8 @@ public class CatController : MonoBehaviour
         // 이동 방향에 따라 캐릭터 회전
         if (moveVec != Vector3.zero)
         {
-            transform.rotation = Quaternion.LookRotation(moveVec);
+            Quaternion targetRotation = Quaternion.LookRotation(moveVec);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
             anim.SetBool("isWalk", true);
         }
         else
@@ -59,5 +61,10 @@ public class CatController : MonoBehaviour
         {
             anim.SetTrigger("isAttack");
         }
+    }
+
+    void speedUp()
+    {
+        speed += 0.5f;
     }
 }
