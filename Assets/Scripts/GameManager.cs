@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
         timer = 0f;
         level = 1;
         nextLevelCondition = levelUpConditions[level - 1];  // 처음 레벨의 조건은 10
+
+        
     }
 
     void Update()
@@ -92,4 +94,6 @@ public class GameManager : MonoBehaviour
         totalMouseCount = GameObject.FindGameObjectsWithTag("mouse").Length;
         UIManager.Instance.UpdateTotalMouseCount();
     }
+
+    
 }

@@ -1,6 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using UnityEngine;
+
 
 public class CatController : MonoBehaviour
 {
@@ -15,10 +19,18 @@ public class CatController : MonoBehaviour
     private Vector3 currentVelocity; // Lerp를 위한 속도
     private Animator anim;
 
+    public static event Action OnRangeIncrease;
+    public static event Action OnSpeedIncrease;
+    public static event Action OnKillAllMouse;
+
+    private float originalSpeed;
+
     void Start()
     {
         anim = GetComponent<Animator>();
         GameManager.Instance.OnLevelUp += speedUp;
+
+        originalSpeed = speed;
     }
 
     void Update()
@@ -66,5 +78,62 @@ public class CatController : MonoBehaviour
     void speedUp()
     {
         speed += 0.5f;
+
+        originalSpeed = speed;
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Item")) // 태그 확인
+        {
+            Item item = other.GetComponent<Item>();
+
+            if (item != null)
+            {
+                // 디버그 메시지와 효과 실행
+                switch (item.type)
+                {
+                    case Item.Type.Range:
+                        UnityEngine.Debug.Log("범위 아이템 획득");
+                        OnRangeIncrease?.Invoke();
+                        break;
+                    case Item.Type.Speed:
+                        UnityEngine.Debug.Log("스피드 아이템 획득");
+                        SpeedUpItem();
+                        OnSpeedIncrease?.Invoke();
+                        break;
+                    case Item.Type.Bomb:
+                        UnityEngine.Debug.Log("폭탄 아이템 획득");
+                        OnKillAllMouse?.Invoke();
+                        break;
+                }
+
+                // 아이템 제거
+                Destroy(other.gameObject);
+            }
+        }
+    }
+
+    void SpeedUpItem()
+    {
+        StartCoroutine(IncreaseSpeedTemporarily());
+    }
+
+    IEnumerator IncreaseSpeedTemporarily()
+    {
+        float increasedSpeed = speed;
+
+        increasedSpeed += 2f;
+        speed = increasedSpeed;
+
+        // 5초 기다린 후, 원래 크기로 돌아감
+        yield return new WaitForSeconds(5f);
+
+        speed = originalSpeed;
+    }
+
 }
+
+
+
+

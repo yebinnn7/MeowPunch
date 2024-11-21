@@ -28,4 +28,6 @@ public class Item : MonoBehaviour
         // 회전 효과
         transform.Rotate(Vector3.up * 100 * Time.deltaTime);
     }
+
+    
 }

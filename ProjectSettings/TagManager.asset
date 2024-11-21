@@ -6,6 +6,8 @@ TagManager:
   tags:
   - hamster
   - mouse
+  - Item
+  - AttackRange
   layers:
   - Default
   - TransparentFX
