@@ -10,24 +10,26 @@ public class MouseController : MonoBehaviour
 
     public float speed = 1f;                    // 이동 속도
     public float changeDirectionInterval = 2f;  // 방향 변경 주기
-    public float fixedYPosition = -1.16f;         // 고정 y 좌표 값
+    public float fixedYPosition = -1.16f;       // 고정 y 좌표 값
 
     private Vector3 moveVec;                    // 이동 벡터
     private Animator anim;                      // 애니메이터
+    private Rigidbody rb;                       // Rigidbody 참조
 
     void Awake()
     {
-
         anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();  // Rigidbody 컴포넌트 참조
+
+        rb.isKinematic = false; // Rigidbody를 물리 엔진에서 제어하도록 설정
 
         StartCoroutine(ChangeDirectionRoutine()); // 방향 변경 코루틴 시작
-
     }
 
     void Update()
     {
         // 이동 처리
-        transform.position += moveVec * speed * Time.deltaTime;
+        rb.velocity = moveVec * speed;  // Rigidbody의 속도 값으로 이동
 
         // y 좌표를 고정하여 위치 업데이트
         transform.position = new Vector3(transform.position.x, fixedYPosition, transform.position.z);
@@ -36,11 +38,6 @@ public class MouseController : MonoBehaviour
         if (moveVec != Vector3.zero)
         {
             transform.rotation = Quaternion.LookRotation(moveVec);
-            // anim.SetBool("isWalk", true);
-        }
-        else
-        {
-            // anim.SetBool("isWalk", false);
         }
     }
 

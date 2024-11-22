@@ -8,6 +8,7 @@ TagManager:
   - mouse
   - Item
   - AttackRange
+  - Wall
   layers:
   - Default
   - TransparentFX

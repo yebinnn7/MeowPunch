@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -41,7 +42,7 @@ public class MouseGenerator : MonoBehaviour
         spawnInterval = 3f * Mathf.Pow(reductionFactor, reductionCount);
 
         // 생성 간격의 하한선을 설정 (옵션)
-        spawnInterval = Mathf.Max(spawnInterval, 0.2f); 
+        spawnInterval = Mathf.Max(spawnInterval, 0.2f);
     }
 
     // 마우스를 생성하는 코루틴
@@ -57,7 +58,7 @@ public class MouseGenerator : MonoBehaviour
     // 마우스 생성 함수
     void SpawnMouse()
     {
-        Vector3 spawnPosition = pos[Random.Range(0, pos.Count)];
+        Vector3 spawnPosition = pos[UnityEngine.Random.Range(0, pos.Count)];
         Instantiate(mousePrefab, spawnPosition, Quaternion.identity);
     }
 }
