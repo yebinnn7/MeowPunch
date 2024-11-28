@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     public int totalMouseCount;
     private float checkInterval = 0.1f; // 1ÃÊ °£°Ý
+    public int gameOverMouse;
 
     void Awake()
     {
@@ -50,6 +52,14 @@ public class GameManager : MonoBehaviour
         if (mouseCatchCount >= nextLevelCondition)
         {
             LevelUp();
+        }
+
+        if (totalMouseCount > gameOverMouse)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("ClearScene");
+            
+
+
         }
     }
 

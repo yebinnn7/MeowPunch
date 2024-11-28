@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
     private float currentYOffset = 0f;  // 초기 Y offset 값 (0에서 시작)
 
     public float timer;
+    public bool isTimer;
 
     void Awake()
     {
@@ -42,14 +43,20 @@ public class UIManager : MonoBehaviour
         CatController.OnSpeedIncrease += UpdateSpeedItemText;
         CatController.OnKillAllMouse += UpdateBombItemText;
 
-
+        isTimer = true;
+        
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        timerText.text = timer.ToString("F2");
+        
+         timer += Time.deltaTime;
+         timerText.text = timer.ToString("F2");
+        
+        
+        
     }
 
     public void UpdateMouseCatchCountText()
