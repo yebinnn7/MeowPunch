@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour
     private float checkInterval = 0.1f; // 1초 간격
     public int gameOverMouse;
 
+
+    public event Action GameReStart;
+
+
     void Awake()
     {
         if (Instance == null)
@@ -42,6 +46,9 @@ public class GameManager : MonoBehaviour
         nextLevelCondition = levelUpConditions[level - 1];  // 처음 레벨의 조건은 10
 
         
+
+
+
     }
 
     void Update()
@@ -56,12 +63,10 @@ public class GameManager : MonoBehaviour
 
         if (totalMouseCount > gameOverMouse)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("ClearScene");
-            
-
-
+            GameOver();
         }
     }
+
 
     public void AddMouseCount()
     {
@@ -102,8 +107,60 @@ public class GameManager : MonoBehaviour
     void CountMice()
     {
         totalMouseCount = GameObject.FindGameObjectsWithTag("mouse").Length;
-        UIManager.Instance.UpdateTotalMouseCount();
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.UpdateTotalMouseCount();
+        }
+        else
+        {
+            Debug.LogWarning("UIManager instance is not set.");
+        }
     }
 
-    
+    public void GameOver()
+    {
+        // 게임 오버 상태에서 UI 갱신
+        UIManager.Instance.clearImage.gameObject.SetActive(true);
+        UIManager.Instance.restartButton.gameObject.SetActive(true);
+
+        // "Mouse" 태그를 가진 모든 오브젝트를 찾음
+        GameObject[] mouseObjects = GameObject.FindGameObjectsWithTag("mouse");
+        foreach (GameObject mouse in mouseObjects)
+        {
+            Destroy(mouse); // 해당 오브젝트 제거
+        }
+
+        // "Hamster" 태그를 가진 모든 오브젝트를 찾음
+        GameObject[] hamsters = GameObject.FindGameObjectsWithTag("hamster");
+        foreach (GameObject hamster in hamsters)
+        {
+            Destroy(hamster); // 해당 오브젝트 제거
+        }
+
+        // "Item" 태그를 가진 모든 오브젝트를 찾음
+        GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
+        foreach (GameObject item in items)
+        {
+            Destroy(item); // 해당 오브젝트 제거
+        }
+
+        // 게임이 종료되면 타임스케일을 0으로 설정하여 시간 멈춤
+        Time.timeScale = 0;
+    }
+
+    public void ResetGame()
+    {
+        Time.timeScale = 1; // 게임 재개 시 타임스케일을 1로 설정하여 시간 시작
+
+        mouseCatchCount = 0;
+        timer = 0f;
+        level = 1;
+        nextLevelCondition = levelUpConditions[level - 1];
+        totalMouseCount = 0;
+
+        GameReStart?.Invoke();
+        
+    }
 }
+
+

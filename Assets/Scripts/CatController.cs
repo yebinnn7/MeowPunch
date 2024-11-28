@@ -29,6 +29,7 @@ public class CatController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         GameManager.Instance.OnLevelUp += speedUp;
+        GameManager.Instance.GameReStart += ResetSpeed;
 
         originalSpeed = speed;
     }
@@ -132,6 +133,12 @@ public class CatController : MonoBehaviour
         speed = originalSpeed;
     }
 
+    void ResetSpeed()
+    {
+        speed = 3f;
+        transform.position = new Vector3(-3f, -1.16f, 0.66f);
+        transform.rotation = Quaternion.Euler(0, 0, 0); // Quaternion으로 회전 설정
+    }
 }
 
 

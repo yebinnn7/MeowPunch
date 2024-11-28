@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 
 public class UIManager : MonoBehaviour
@@ -17,6 +18,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text RangeItemText;
     [SerializeField] private TMP_Text SpeedItemText;
     [SerializeField] private TMP_Text BombItemText;
+
+    public Image clearImage;
+    public Button restartButton;  // 버튼 객체
+
+
     public float fadeDuration = 0.5f; // Fade Out 효과의 지속 시간
 
     private List<TMP_Text> activeTexts = new List<TMP_Text>(); // 현재 활성화된 텍스트들을 추적
@@ -24,7 +30,8 @@ public class UIManager : MonoBehaviour
     private float currentYOffset = 0f;  // 초기 Y offset 값 (0에서 시작)
 
     public float timer;
-    public bool isTimer;
+    
+
 
     void Awake()
     {
@@ -43,21 +50,45 @@ public class UIManager : MonoBehaviour
         CatController.OnSpeedIncrease += UpdateSpeedItemText;
         CatController.OnKillAllMouse += UpdateBombItemText;
 
-        isTimer = true;
+        
+
         
         
     }
 
+    // 씬이 로드될 때마다 UI 오브젝트들을 찾아서 할당
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        mouseCatchCountText = GameObject.Find("mouseCatchCount")?.GetComponent<Text>();
+        timerText = GameObject.Find("TimerText")?.GetComponent<Text>();
+        levelText = GameObject.Find("Level")?.GetComponent<Text>();
+        totalMouseCountText = GameObject.Find("TotalMouseText")?.GetComponent<Text>();
+
+        // UI 오브젝트들을 Canvas 내에서 찾아서 할당
+        Canvas canvas = FindObjectOfType<Canvas>();
+        if (canvas != null)
+        {
+            RangeItemText = canvas.transform.Find("RangeItemText")?.GetComponent<TMP_Text>();
+            SpeedItemText = canvas.transform.Find("SpeedItemText")?.GetComponent<TMP_Text>();
+            BombItemText = canvas.transform.Find("BombItemText")?.GetComponent<TMP_Text>();
+            clearImage = canvas.transform.Find("Image")?.GetComponent<Image>();
+        }
+    }
+
+   
+
     // Update is called once per frame
     void Update()
     {
+
         
          timer += Time.deltaTime;
          timerText.text = timer.ToString("F2");
         
-        
-        
+
+
     }
+
 
     public void UpdateMouseCatchCountText()
     {
@@ -75,7 +106,15 @@ public class UIManager : MonoBehaviour
 
     public void UpdateTotalMouseCount()
     {
-        totalMouseCountText.text = GameManager.Instance.totalMouseCount.ToString();
+        if (GameManager.Instance != null)
+        {
+            totalMouseCountText.text = GameManager.Instance.totalMouseCount.ToString();
+        }
+        else
+        {
+            Debug.LogWarning("GameManager instance is not set.");
+        }
+
     }
 
     public void UpdateRangeItemText()
@@ -169,5 +208,33 @@ public class UIManager : MonoBehaviour
         activeTexts = remainingTexts;
         // Y 오프셋을 갱신 (다음 텍스트가 정확히 올 위치로 설정)
         currentYOffset = newYOffset;
+    }
+
+    public void ClickReStartBtn()
+    {
+        // 게임 재개 버튼 클릭 시
+        Time.timeScale = 1; // 타임스케일을 1로 설정하여 게임이 재개됨
+        GameManager.Instance.totalMouseCount = 0;
+
+        // UI 상태 초기화
+        clearImage.gameObject.SetActive(false);
+        restartButton.gameObject.SetActive(false);
+
+        // 게임 리셋
+        GameManager.Instance.ResetGame();
+
+        // UI 업데이트
+        ResetUI();
+    }
+
+    public void ResetUI()
+    {
+        timer = 0;
+        UpdateMouseCatchCountText();
+        UpdateLevelText();
+        UpdateTotalMouseCount();
+        RangeItemText.gameObject.SetActive(false);
+        SpeedItemText.gameObject.SetActive(false);
+        BombItemText.gameObject.SetActive(false);
     }
 }

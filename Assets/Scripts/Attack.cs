@@ -16,7 +16,11 @@ public class Attack : MonoBehaviour
         CatController.OnRangeIncrease += RangeIncreaseItem;
         CatController.OnKillAllMouse += KillAllMouseItem;
 
+        GameManager.Instance.GameReStart += ResetRange;
+
         originalScale = transform.localScale;
+
+
     }
 
     // 트리거에 들어간 객체를 리스트에 추가
@@ -31,6 +35,8 @@ public class Attack : MonoBehaviour
             }
         }
     }
+
+  
 
     // 트리거에서 나간 객체를 리스트에서 제거
     void OnTriggerExit(Collider other)
@@ -139,5 +145,10 @@ public class Attack : MonoBehaviour
             mouseController.MouseDead(); // MouseDead 함수 호출
             
         }
+    }
+
+    void ResetRange()
+    {
+        transform.localScale = new Vector3(1.5f, 0.001f, 1.5f);
     }
 }
