@@ -24,6 +24,10 @@ public class CatController : MonoBehaviour
     public static event Action OnKillAllMouse;
 
     private float originalSpeed;
+    // 속도 증가가 진행 중인지 확인하는 변수
+    private bool isSpeedIncreased = false;
+    private float speedIncreaseEndTime = 0f; // 속도 증가 종료 시간
+
 
     void Start()
     {
@@ -115,22 +119,39 @@ public class CatController : MonoBehaviour
         }
     }
 
+    // 아이템 사용 시 속도 증가 (5초 동안만)
     void SpeedUpItem()
     {
-        StartCoroutine(IncreaseSpeedTemporarily());
+        if (!isSpeedIncreased)
+        {
+            // 속도 증가 시작
+            StartCoroutine(IncreaseSpeedTemporarily());
+        }
+        else
+        {
+            // 속도가 이미 증가 중이면 5초를 추가
+            speedIncreaseEndTime += 5f;
+        }
     }
 
+    // 5초 동안 속도 증가
     IEnumerator IncreaseSpeedTemporarily()
     {
-        float increasedSpeed = speed;
+        isSpeedIncreased = true;
+        speedIncreaseEndTime = Time.time + 5f; // 5초 후 종료 시간을 설정
 
+        float increasedSpeed = speed;
         increasedSpeed += 2f;
         speed = increasedSpeed;
 
-        // 5초 기다린 후, 원래 크기로 돌아감
-        yield return new WaitForSeconds(5f);
+        // 5초 기다린 후, 원래 속도로 돌아감
+        while (Time.time < speedIncreaseEndTime)
+        {
+            yield return null; // 속도 증가가 끝날 때까지 기다림
+        }
 
         speed = originalSpeed;
+        isSpeedIncreased = false; // 속도 증가 상태 해제
     }
 
     void ResetSpeed()

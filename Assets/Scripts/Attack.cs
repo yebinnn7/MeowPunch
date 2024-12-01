@@ -9,6 +9,11 @@ public class Attack : MonoBehaviour
     private List<Collider> collidersInRange = new List<Collider>(); // 트리거 영역에 있는 객체들을 저장
     private Vector3 originalScale;
 
+    // 공격 범위가 증가했는지 확인하는 변수
+    private bool isRangeIncreased = false;
+    private float rangeIncreaseEndTime = 0f; // 범위 증가 종료 시간
+
+
     void Awake()
     {
         // GameManager의 OnLevelUp 이벤트 구독
@@ -113,13 +118,24 @@ public class Attack : MonoBehaviour
     // 아이템 사용 시 공격 범위 증가 (5초 동안만)
     void RangeIncreaseItem()
     {
-        // 범위 증가
-        StartCoroutine(IncreaseRangeTemporarily());
+        if (!isRangeIncreased)
+        {
+            // 범위 증가 시작
+            StartCoroutine(IncreaseRangeTemporarily());
+        }
+        else
+        {
+            // 범위 증가가 이미 진행 중이면 5초를 추가
+            rangeIncreaseEndTime += 5f;
+        }
     }
 
     // 5초 동안 공격 범위 증가
     IEnumerator IncreaseRangeTemporarily()
     {
+        isRangeIncreased = true;
+        rangeIncreaseEndTime = Time.time + 5f; // 5초 후 종료 시간을 설정
+
         // 현재 범위 저장
         Vector3 increasedScale = transform.localScale;
         increasedScale.x += 2f;
@@ -127,9 +143,14 @@ public class Attack : MonoBehaviour
         transform.localScale = increasedScale;
 
         // 5초 기다린 후, 원래 크기로 돌아감
-        yield return new WaitForSeconds(5f);
+        while (Time.time < rangeIncreaseEndTime)
+        {
+            yield return null; // 범위 증가가 끝날 때까지 기다림
+        }
 
-        transform.localScale = originalScale; // 원래 크기로 복원
+        // 원래 크기로 복원
+        transform.localScale = originalScale;
+        isRangeIncreased = false; // 범위 증가 상태 해제
     }
 
     void KillAllMouseItem()

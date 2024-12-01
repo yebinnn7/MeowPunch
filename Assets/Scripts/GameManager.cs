@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
 
     public event Action GameReStart;
 
+    public int bestscore;
+
 
     void Awake()
     {
@@ -44,9 +46,9 @@ public class GameManager : MonoBehaviour
         timer = 0f;
         level = 1;
         nextLevelCondition = levelUpConditions[level - 1];  // 처음 레벨의 조건은 10
-
+        bestscore = 0;
         
-
+        
 
 
     }
@@ -119,9 +121,17 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        if (mouseCatchCount > bestscore)
+        {
+            bestscore = mouseCatchCount;
+        }
+
         // 게임 오버 상태에서 UI 갱신
         UIManager.Instance.clearImage.gameObject.SetActive(true);
         UIManager.Instance.restartButton.gameObject.SetActive(true);
+
+        UIManager.Instance.bestScoreText.text = "최고점수: " + bestscore;
+        UIManager.Instance.currentScoreText.text = "현재점수: " + mouseCatchCount;
 
         // "Mouse" 태그를 가진 모든 오브젝트를 찾음
         GameObject[] mouseObjects = GameObject.FindGameObjectsWithTag("mouse");

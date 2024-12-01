@@ -23,12 +23,14 @@ public class ItemGenerator : MonoBehaviour
     {
         // 랜덤 위치 리스트 초기화
         pos.Add(new Vector3(UnityEngine.Random.Range(-7, -4), -0.76f, 7.5f));
-        pos.Add(new Vector3(-7.3f, -0.76f, UnityEngine.Random.Range(1, 5)));
-        pos.Add(new Vector3(1.3f, -0.76f, UnityEngine.Random.Range(1.3f, 6.3f)));
-        pos.Add(new Vector3(4.8f, -0.76f, UnityEngine.Random.Range(4, 6)));
-        pos.Add(new Vector3(UnityEngine.Random.Range(0.6f, 9.4f), -0.76f, UnityEngine.Random.Range(-10, -2.8f)));
-        pos.Add(new Vector3(UnityEngine.Random.Range(-6, -4.5f), -0.76f, UnityEngine.Random.Range(-9, -8)));
-        pos.Add(new Vector3(UnityEngine.Random.Range(-9, -4), -0.76f, UnityEngine.Random.Range(-5, -1.5f)));
+        pos.Add(new Vector3(-6.8f, -0.76f, UnityEngine.Random.Range(-5, 7.7f)));
+        pos.Add(new Vector3(UnityEngine.Random.Range(-1.8f, 0f), -0.76f, UnityEngine.Random.Range(0.5f, 6f)));
+        pos.Add(new Vector3(4f, -0.76f, UnityEngine.Random.Range(2.7f, 6.5f)));
+        pos.Add(new Vector3(8f, -0.76f, UnityEngine.Random.Range(2.7f, 6.5f)));
+        pos.Add(new Vector3(UnityEngine.Random.Range(1.5f, 9f), -0.76f, -3.2f));
+        pos.Add(new Vector3(UnityEngine.Random.Range(2f, 5f), -0.76f, UnityEngine.Random.Range(-10f, -4f)));
+        pos.Add(new Vector3(UnityEngine.Random.Range(-6f, -3.5f), -0.76f, UnityEngine.Random.Range(-9.5f, -8f)));
+        pos.Add(new Vector3(UnityEngine.Random.Range(-9f, -2.5f), -0.76f, UnityEngine.Random.Range(-4.8f, -1.7f)));
 
         // 각 아이템의 생성 코루틴을 시작
         StartCoroutine(SpawnRangeItemCoroutine());

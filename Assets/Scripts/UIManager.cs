@@ -18,6 +18,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text RangeItemText;
     [SerializeField] private TMP_Text SpeedItemText;
     [SerializeField] private TMP_Text BombItemText;
+    public TMP_Text bestScoreText;
+    public TMP_Text currentScoreText;
 
     public Image clearImage;
     public Button restartButton;  // 버튼 객체
@@ -71,6 +73,9 @@ public class UIManager : MonoBehaviour
             RangeItemText = canvas.transform.Find("RangeItemText")?.GetComponent<TMP_Text>();
             SpeedItemText = canvas.transform.Find("SpeedItemText")?.GetComponent<TMP_Text>();
             BombItemText = canvas.transform.Find("BombItemText")?.GetComponent<TMP_Text>();
+            bestScoreText = canvas.transform.Find("BestSocreText")?.GetComponent<TMP_Text>();
+            currentScoreText = canvas.transform.Find("CurrentSocreText")?.GetComponent<TMP_Text>();
+
             clearImage = canvas.transform.Find("Image")?.GetComponent<Image>();
         }
     }
@@ -117,19 +122,51 @@ public class UIManager : MonoBehaviour
 
     }
 
+    private Dictionary<TMP_Text, Coroutine> activeCoroutines = new Dictionary<TMP_Text, Coroutine>();
+
     public void UpdateRangeItemText()
     {
-        ShowAndFadeText(RangeItemText, 5f);  // Range 아이템은 5초 후 사라짐
+        TMP_Text existingText = FindExistingText(RangeItemText);
+        if (existingText != null)
+        {
+            // 기존 텍스트가 있으면 지속 시간을 늘린다.
+            ExtendTextFadeOutTime(existingText, 5f);
+        }
+        else
+        {
+            // 기존 텍스트가 없으면 새로 생성
+            ShowAndFadeText(RangeItemText, 5f);
+        }
     }
 
     public void UpdateSpeedItemText()
     {
-        ShowAndFadeText(SpeedItemText, 5f);  // Speed 아이템은 5초 후 사라짐
+        TMP_Text existingText = FindExistingText(SpeedItemText);
+        if (existingText != null)
+        {
+            // 기존 텍스트가 있으면 지속 시간을 늘린다.
+            ExtendTextFadeOutTime(existingText, 5f);
+        }
+        else
+        {
+            // 기존 텍스트가 없으면 새로 생성
+            ShowAndFadeText(SpeedItemText, 5f);
+        }
     }
 
     public void UpdateBombItemText()
     {
-        ShowAndFadeText(BombItemText, 3f);  // Bomb 아이템은 3초 후 사라짐
+        TMP_Text existingText = FindExistingText(BombItemText);
+        if (existingText != null)
+        {
+            // 기존 텍스트가 있으면 지속 시간을 늘린다.
+            ExtendTextFadeOutTime(existingText, 3f);
+        }
+        else
+        {
+            // 기존 텍스트가 없으면 새로 생성
+            ShowAndFadeText(BombItemText, 3f);
+        }
     }
 
     public void ShowAndFadeText(TMP_Text targetText, float fadeOutTime)
@@ -149,8 +186,31 @@ public class UIManager : MonoBehaviour
         // 다음 텍스트의 Y 오프셋 증가
         currentYOffset += 45f;
 
-        // 지정된 시간 후 Fade Out 효과 시작
-        StartCoroutine(WaitAndFadeOut(targetText, fadeOutTime));
+        // 텍스트의 페이드 아웃 효과를 시작하는 코루틴 실행
+        Coroutine fadeOutCoroutine = StartCoroutine(WaitAndFadeOut(targetText, fadeOutTime));
+
+        // 이미 실행 중인 코루틴을 기록 (텍스트와 코루틴을 연결)
+        if (activeCoroutines.ContainsKey(targetText))
+        {
+            StopCoroutine(activeCoroutines[targetText]);
+        }
+        activeCoroutines[targetText] = fadeOutCoroutine;
+    }
+
+    private void ExtendTextFadeOutTime(TMP_Text targetText, float additionalTime)
+    {
+        if (activeCoroutines.ContainsKey(targetText))
+        {
+            // 기존 코루틴이 존재하면 추가 시간만큼 연장
+            StopCoroutine(activeCoroutines[targetText]);
+            activeCoroutines.Remove(targetText);
+        }
+
+        // 추가 시간만큼 연장된 새로운 코루틴을 시작
+        Coroutine extendedCoroutine = StartCoroutine(WaitAndFadeOut(targetText, additionalTime + fadeDuration));
+
+        // 새로운 코루틴을 기록
+        activeCoroutines[targetText] = extendedCoroutine;
     }
 
     private IEnumerator WaitAndFadeOut(TMP_Text targetText, float fadeOutTime)
@@ -184,6 +244,18 @@ public class UIManager : MonoBehaviour
         AdjustTextPositions();
     }
 
+    private TMP_Text FindExistingText(TMP_Text targetText)
+    {
+        foreach (var text in activeTexts)
+        {
+            if (text == targetText && text.gameObject.activeSelf)
+            {
+                return text; // 이미 활성화된 텍스트 반환
+            }
+        }
+        return null; // 존재하지 않으면 null 반환
+    }
+
     private void AdjustTextPositions()
     {
         // 텍스트가 사라졌을 때, 사라지지 않은 텍스트들의 위치를 갱신하는 방식
@@ -209,6 +281,8 @@ public class UIManager : MonoBehaviour
         // Y 오프셋을 갱신 (다음 텍스트가 정확히 올 위치로 설정)
         currentYOffset = newYOffset;
     }
+
+
 
     public void ClickReStartBtn()
     {
