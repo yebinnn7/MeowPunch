@@ -177,14 +177,14 @@ public class UIManager : MonoBehaviour
         textColor.a = 1f; // 알파 값 1 (불투명)
         targetText.color = textColor;
 
-        // 텍스트의 위치 설정 (현재 Y 값에 45씩 추가)
+        // 텍스트의 위치 설정 (현재 Y 값에 90씩 추가)
         targetText.transform.localPosition = new Vector3(0, currentYOffset, 0);
 
         // 텍스트 리스트에 추가
         activeTexts.Add(targetText);
 
         // 다음 텍스트의 Y 오프셋 증가
-        currentYOffset += 45f;
+        currentYOffset += 90f;
 
         // 텍스트의 페이드 아웃 효과를 시작하는 코루틴 실행
         Coroutine fadeOutCoroutine = StartCoroutine(WaitAndFadeOut(targetText, fadeOutTime));
@@ -273,7 +273,7 @@ public class UIManager : MonoBehaviour
         foreach (var text in remainingTexts)
         {
             text.transform.localPosition = new Vector3(0, newYOffset, 0);
-            newYOffset += 45f; // 각 텍스트마다 45씩 간격을 둔다
+            newYOffset += 90f; // 각 텍스트마다 90씩 간격을 둔다
         }
 
         // 활성화된 텍스트들로 리스트 갱신

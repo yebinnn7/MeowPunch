@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
             LevelUp();
         }
 
-        if (totalMouseCount > gameOverMouse)
+        if (totalMouseCount >= gameOverMouse)
         {
             GameOver();
         }
