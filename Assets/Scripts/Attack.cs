@@ -91,6 +91,7 @@ public class Attack : MonoBehaviour
                     if (hamsterController != null)
                     {
                         hamsterController.HamsterDead(); // MouseDead 함수 호출
+                        GameManager.Instance.GameOver();
                     }
                 }
             }
