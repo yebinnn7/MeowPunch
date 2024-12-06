@@ -4125,7 +4125,7 @@ MonoBehaviour:
   timer: 0
   level: 0
   totalMouseCount: 0
-  gameOverMouse: 5
+  gameOverMouse: 20
   bestscore: 0
 --- !u!4 &645213507
 Transform:
