@@ -115,7 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManagerObj: {fileID: 0}
   gameManager: {fileID: 0}
-  speed: 1
+  speed: 2
   changeDirectionInterval: 5
   fixedYPosition: -1.16
 --- !u!54 &5817857756214440352
