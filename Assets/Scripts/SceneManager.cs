@@ -9,6 +9,7 @@ public class SceneManager : MonoBehaviour
     {
         
         UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene");
+        SoundManager.Instance.PlaySound("button2");
     }
 
    
