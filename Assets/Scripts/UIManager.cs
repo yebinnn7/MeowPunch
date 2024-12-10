@@ -286,6 +286,8 @@ public class UIManager : MonoBehaviour
 
     public void ClickReStartBtn()
     {
+        SoundManager.Instance.PlaySound("button2");
+
         // 게임 재개 버튼 클릭 시
         Time.timeScale = 1; // 타임스케일을 1로 설정하여 게임이 재개됨
         GameManager.Instance.totalMouseCount = 0;

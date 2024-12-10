@@ -71,8 +71,11 @@ public class Attack : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            if (!UIManager.Instance.clearImage.gameObject.activeSelf)
+            {
+                SoundManager.Instance.PlaySound("attack");
+            }
 
-            SoundManager.Instance.PlaySound("attack");
 
             // 트리거 안에 있는 모든 객체 삭제
             foreach (Collider collider in collidersInRange)

@@ -100,15 +100,18 @@ public class CatController : MonoBehaviour
                 {
                     case Item.Type.Range:
                         UnityEngine.Debug.Log("π¸¿ß æ∆¿Ã≈€ »πµÊ");
+                        SoundManager.Instance.PlaySound("item");
                         OnRangeIncrease?.Invoke();
                         break;
                     case Item.Type.Speed:
                         UnityEngine.Debug.Log("Ω∫««µÂ æ∆¿Ã≈€ »πµÊ");
+                        SoundManager.Instance.PlaySound("item");
                         SpeedUpItem();
                         OnSpeedIncrease?.Invoke();
                         break;
                     case Item.Type.Bomb:
                         UnityEngine.Debug.Log("∆¯≈∫ æ∆¿Ã≈€ »πµÊ");
+                        SoundManager.Instance.PlaySound("bomb");
                         OnKillAllMouse?.Invoke();
                         break;
                 }

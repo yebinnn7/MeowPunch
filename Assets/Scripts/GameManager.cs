@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour
             nextLevelCondition = levelUpConditions[level - 1];  // 다음 레벨의 조건으로 업데이트
             OnLevelUp?.Invoke();  // 레벨업 이벤트 호출
             UIManager.Instance.UpdateLevelText();
+            SoundManager.Instance.PlaySound("levelup");
         }
     }
 
@@ -121,6 +122,8 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        SoundManager.Instance.PlaySound("dead");
+
         if (mouseCatchCount > bestscore)
         {
             bestscore = mouseCatchCount;
