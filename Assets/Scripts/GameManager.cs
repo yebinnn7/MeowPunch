@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 
     public int bestscore;
 
+    private float meowSoundCheckInterval = 10f;
+
 
     void Awake()
     {
@@ -47,8 +49,8 @@ public class GameManager : MonoBehaviour
         level = 1;
         nextLevelCondition = levelUpConditions[level - 1];  // 처음 레벨의 조건은 10
         bestscore = 0;
-        
-        
+
+        StartCoroutine(MeowSoundCoroutine());
 
 
     }
@@ -67,6 +69,8 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
+
+
     }
 
 
@@ -173,6 +177,32 @@ public class GameManager : MonoBehaviour
 
         GameReStart?.Invoke();
         
+    }
+
+    IEnumerator MeowSoundCoroutine()
+    {
+        bool playCat1 = true; // cat1과 cat2를 번갈아 재생하기 위한 플래그
+
+        // 초기 3초 대기
+        yield return new WaitForSeconds(3f);
+
+        while (true)
+        {
+            if (playCat1)
+            {
+                SoundManager.Instance.PlaySound("cat");
+            }
+            else
+            {
+                SoundManager.Instance.PlaySound("cat2");
+            }
+
+            // 다음 번에는 다른 사운드 재생
+            playCat1 = !playCat1;
+
+            // 지정된 간격 대기
+            yield return new WaitForSeconds(meowSoundCheckInterval);
+        }
     }
 }
 
