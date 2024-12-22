@@ -12,5 +12,4 @@ public class SceneManager : MonoBehaviour
         SoundManager.Instance.PlaySound("button2");
     }
 
-   
 }

@@ -10,8 +10,8 @@ public class MouseGenerator : MonoBehaviour
 
     public float timer = 0f;  // 타이머 값
     private float spawnInterval = 3f;  // 기본 생성 간격
-    private float reductionFactor = 0.7f; // 생성 간격 감소 비율
-    private float reductionPeriod = 10f; // 감소 주기
+    private float reductionFactor = 0.5f; // 생성 간격 감소 비율
+    private float reductionPeriod = 15f; // 감소 주기
 
     // Start is called before the first frame update
     void Start()
@@ -44,7 +44,7 @@ public class MouseGenerator : MonoBehaviour
         spawnInterval = 3f * Mathf.Pow(reductionFactor, reductionCount);
 
         // 생성 간격의 하한선을 설정 (옵션)
-        spawnInterval = Mathf.Max(spawnInterval, 0.2f);
+        spawnInterval = Mathf.Max(spawnInterval, 0.13f);
     }
 
     // 마우스를 생성하는 코루틴

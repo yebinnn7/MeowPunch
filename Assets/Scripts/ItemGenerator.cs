@@ -13,8 +13,8 @@ public class ItemGenerator : MonoBehaviour
     // 아이템 생성 주기 범위
     private float rangeMinTime = 30f;
     private float rangeMaxTime = 50f;
-    private float bombMinTime = 90f; // 1분 30초
-    private float bombMaxTime = 150f; // 2분 30초
+    private float bombMinTime = 50f; // 1분 30초
+    private float bombMaxTime = 90f; // 2분 30초
     private float speedMinTime = 30f;
     private float speedMaxTime = 50f;
 
@@ -69,18 +69,46 @@ public class ItemGenerator : MonoBehaviour
     // Bomb 아이템 생성 주기
     IEnumerator SpawnBombItemCoroutine()
     {
+        // 20초 기다린 후 첫 번째 Bomb 아이템 생성
+        yield return new WaitForSeconds(20f); // 첫 번째 생성까지 20초 대기
+
         while (true) // 무한 반복
         {
-            float spawnTime = UnityEngine.Random.Range(bombMinTime, bombMaxTime); // 1분 30초 ~ 2분 30초 사이의 랜덤 시간
             SpawnItem(bombItemPrefab); // Bomb 아이템 생성
+
+            // 이후에는 랜덤한 시간 간격으로 생성
+            float spawnTime = UnityEngine.Random.Range(bombMinTime, bombMaxTime); // 1분 30초 ~ 2분 30초 사이의 랜덤 시간
             yield return new WaitForSeconds(spawnTime); // 랜덤 대기 시간
         }
     }
 
-    // 아이템 생성 함수 (공통으로 사용)
     void SpawnItem(GameObject itemPrefab)
     {
-        Vector3 spawnPosition = pos[UnityEngine.Random.Range(0, pos.Count)];
+        Vector3 spawnPosition = GetRandomPosition();
+        while (IsPositionOccupied(spawnPosition))
+        {
+            spawnPosition = GetRandomPosition(); // 겹치는 경우 새 위치 찾기
+        }
         Instantiate(itemPrefab, spawnPosition, Quaternion.identity);
+    }
+
+    Vector3 GetRandomPosition()
+    {
+        // 랜덤 위치 반환
+        return pos[UnityEngine.Random.Range(0, pos.Count)];
+    }
+
+    bool IsPositionOccupied(Vector3 position)
+    {
+        // 일정 반경 안에 다른 오브젝트가 있는지 확인 (여기선 1f 반경)
+        Collider[] colliders = Physics.OverlapSphere(position, 1f);
+        foreach (Collider collider in colliders)
+        {
+            if (collider.CompareTag("Item")) // 아이템 태그를 가진 오브젝트가 있으면 겹친 것
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

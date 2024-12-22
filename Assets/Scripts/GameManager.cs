@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public int level;
 
     private int nextLevelCondition;  // 레벨업 조건
-    private int[] levelUpConditions = new int[] { 10, 30, 60, 100, 150, 210, 280 };  // 레벨업 조건 (10, 30, 60, 100, ...)
+    private int[] levelUpConditions = new int[] { 10, 20, 40, 80, 160, 320, 640 };
 
     public event Action OnLevelUp;
 
@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
         if (totalMouseCount >= gameOverMouse)
         {
             GameOver();
+            totalMouseCount = 0;
         }
 
 
@@ -163,6 +164,8 @@ public class GameManager : MonoBehaviour
 
         // 게임이 종료되면 타임스케일을 0으로 설정하여 시간 멈춤
         Time.timeScale = 0;
+
+        
     }
 
     public void ResetGame()

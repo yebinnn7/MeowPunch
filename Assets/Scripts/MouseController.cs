@@ -8,7 +8,7 @@ public class MouseController : MonoBehaviour
     public GameObject gameManagerObj; // GameManager 오브젝트 참조
     public GameManager gameManager; // GameManager 스크립트 참조
 
-    public float speed = 1f;                    // 이동 속도
+    public float speed = 5f;                    // 이동 속도
     public float changeDirectionInterval = 2f;  // 방향 변경 주기
     public float fixedYPosition = -1.16f;       // 고정 y 좌표 값
 
@@ -24,6 +24,8 @@ public class MouseController : MonoBehaviour
         rb.isKinematic = false; // Rigidbody를 물리 엔진에서 제어하도록 설정
 
         StartCoroutine(ChangeDirectionRoutine()); // 방향 변경 코루틴 시작
+
+        speed = 2f;
     }
 
     void Update()
@@ -39,6 +41,8 @@ public class MouseController : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(moveVec);
         }
+
+
     }
 
     IEnumerator ChangeDirectionRoutine()
@@ -57,6 +61,8 @@ public class MouseController : MonoBehaviour
         float randomX = UnityEngine.Random.Range(-1f, 1f);
         float randomZ = UnityEngine.Random.Range(-1f, 1f);
         moveVec = new Vector3(randomX, 0, randomZ).normalized;
+
+
     }
 
     void OnCollisionEnter(Collision collision)

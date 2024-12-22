@@ -122,7 +122,6 @@ public class CatController : MonoBehaviour
         }
     }
 
-    // 아이템 사용 시 속도 증가 (5초 동안만)
     void SpeedUpItem()
     {
         if (!isSpeedIncreased)
@@ -143,17 +142,18 @@ public class CatController : MonoBehaviour
         isSpeedIncreased = true;
         speedIncreaseEndTime = Time.time + 5f; // 5초 후 종료 시간을 설정
 
-        float increasedSpeed = speed;
-        increasedSpeed += 2f;
-        speed = increasedSpeed;
+        // 현재 속도에서 +2 증가
+        speed += 2f;
 
-        // 5초 기다린 후, 원래 속도로 돌아감
+        // 5초 기다린 후, 속도 2 감소
         while (Time.time < speedIncreaseEndTime)
         {
             yield return null; // 속도 증가가 끝날 때까지 기다림
         }
 
-        speed = originalSpeed;
+        // 속도 2 감소
+        speed -= 2f;
+
         isSpeedIncreased = false; // 속도 증가 상태 해제
     }
 

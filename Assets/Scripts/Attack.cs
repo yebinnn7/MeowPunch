@@ -41,7 +41,7 @@ public class Attack : MonoBehaviour
         }
     }
 
-  
+
 
     // 트리거에서 나간 객체를 리스트에서 제거
     void OnTriggerExit(Collider other)
@@ -113,7 +113,7 @@ public class Attack : MonoBehaviour
         Vector3 currentScale = transform.localScale;
 
         // X와 Z 축의 스케일 값을 증가
-        currentScale.x += 0.25f; 
+        currentScale.x += 0.25f;
         currentScale.z += 0.25f;
 
         // 스케일 값을 적용
@@ -144,19 +144,22 @@ public class Attack : MonoBehaviour
         rangeIncreaseEndTime = Time.time + 5f; // 5초 후 종료 시간을 설정
 
         // 현재 범위 저장
-        Vector3 increasedScale = transform.localScale;
-        increasedScale.x += 2f;
-        increasedScale.z += 2f;
-        transform.localScale = increasedScale;
+        Vector3 currentScale = transform.localScale;
+        currentScale.x += 2f; // 범위 증가
+        currentScale.z += 2f;
+        transform.localScale = currentScale;
 
-        // 5초 기다린 후, 원래 크기로 돌아감
+        // 5초 기다린 후, 범위 감소
         while (Time.time < rangeIncreaseEndTime)
         {
             yield return null; // 범위 증가가 끝날 때까지 기다림
         }
 
-        // 원래 크기로 복원
-        transform.localScale = originalScale;
+        // 범위 감소
+        currentScale.x -= 2f; // 범위 감소
+        currentScale.z -= 2f;
+        transform.localScale = currentScale;
+
         isRangeIncreased = false; // 범위 증가 상태 해제
     }
 
@@ -169,9 +172,9 @@ public class Attack : MonoBehaviour
         foreach (GameObject mouse in mice)
         {
             MouseController mouseController = mouse.GetComponent<MouseController>(); // MouseController 컴포넌트를 가져옴
-                  
+
             mouseController.MouseDead(); // MouseDead 함수 호출
-            
+
         }
     }
 
