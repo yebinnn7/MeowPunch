@@ -17,11 +17,16 @@ public class HamsterGenerator : MonoBehaviour
 
     void Start()
     {
-        pos.Add(new Vector3(10f, -1.16f, -10f));
+        pos.Add(new Vector3(1.5f, -1.16f, -4f));
         pos.Add(new Vector3(-6f, -1.16f, 8f));
         pos.Add(new Vector3(7.9f, -1.16f, 6.7f));
         pos.Add(new Vector3(-5f, -1.16f, -3.3f));
-        pos.Add(new Vector3(-4f, -1.16f, -9f));
+        pos.Add(new Vector3(-3.8f, -1.16f, -8f));
+        pos.Add(new Vector3(-1.5f, -1.16f, 0.5f));
+        pos.Add(new Vector3(-6.5f, -1.16f, 7.5f));
+        pos.Add(new Vector3(5.7f, -1.16f, -4f));
+        pos.Add(new Vector3(-0.6f, -1.16f, 5.3f));
+        pos.Add(new Vector3(3.1f, -1.16f, -9.3f));
 
         // Debug.Log("햄스터 생성기 시작");
         StartCoroutine(SpawnHamsterCoroutine()); // 코루틴 시작

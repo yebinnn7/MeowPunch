@@ -26,6 +26,8 @@ public class MouseController : MonoBehaviour
         StartCoroutine(ChangeDirectionRoutine()); // 방향 변경 코루틴 시작
 
         speed = 2f;
+
+        
     }
 
     void Update()
@@ -41,6 +43,8 @@ public class MouseController : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(moveVec);
         }
+
+        
 
 
     }

@@ -47,6 +47,8 @@ public class HamsterController : MonoBehaviour
         }
 
         currentLifeTime += Time.deltaTime;
+
+        
     }
 
     IEnumerator ChangeDirectionRoutine()
